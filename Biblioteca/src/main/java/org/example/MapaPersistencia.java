@@ -20,9 +20,9 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
         return resposta;
     }
 
-    protected abstract void inserirItemNoArmazenamento(T itemPersistencia);
+    protected abstract void inserirItemNoArmazenamento(T itemPersistencia, Connection conexao);
 
-    protected abstract void excluirItemNoArmazenamento();
+    protected abstract void excluirItemNoArmazenamento(Connection conexao);
 
     public MapaPersistencia() {
         colecaoObjetos = new ArrayList<>();
@@ -33,7 +33,7 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     public boolean inserir(ItemPersistencia itemPersistencia, Connection connection) {
         boolean resposta = false;
         if (!haItemPersistido(itemPersistencia.getOID())) {
-            inserirItemNoArmazenamento((T) itemPersistencia);
+            inserirItemNoArmazenamento((T) itemPersistencia, connection);
             resposta = true;
         }
         return resposta;
@@ -42,7 +42,7 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     public boolean excluir(String oid, Connection connection) {
         boolean resposta = false;
         if (haItemPersistido(oid)) {
-            excluirItemNoArmazenamento();
+            excluirItemNoArmazenamento(connection);
             resposta = true;
         }
         return resposta;
@@ -51,4 +51,5 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     public Iterator<T> obterTodos(Connection connection) {
         return colecaoObjetos.iterator();
     }
+
 }

@@ -10,6 +10,7 @@ import java.util.Iterator;
 class MPCliente extends MapaPersistencia<Cliente> {
 
 
+    @Override
     protected void inserirItemNoArmazenamento(Cliente cliente, Connection conexao) {
         try {
             String sql = "INSERT INTO cliente (oid, idCliente, cpf, nome, telefone) " +
@@ -27,6 +28,7 @@ class MPCliente extends MapaPersistencia<Cliente> {
         }
     }
 
+    @Override
     protected void excluirItemNoArmazenamento(Connection conexao) {
         try {
             String sql = "DELETE FROM cliente WHERE oid = ?";
@@ -64,17 +66,9 @@ class MPCliente extends MapaPersistencia<Cliente> {
         }
     }
 
-    @Override
-    protected void inserirItemNoArmazenamento(Cliente itemPersistencia) {
-
-    }
-
-    @Override
-    protected void excluirItemNoArmazenamento() {
-
-    }
 
     public MPCliente() {
         super();
     }
+
 }

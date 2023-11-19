@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 
 class Controle {
@@ -16,9 +17,9 @@ class Controle {
     public boolean excluir(String oid, Classe classe) {
         return p.excluir(oid, classe);
     }
-
     public <T extends ItemPersistencia> Iterator<T> getLista(Classe classe) {
         return p.obterTodos(classe);
     }
+
 }
 

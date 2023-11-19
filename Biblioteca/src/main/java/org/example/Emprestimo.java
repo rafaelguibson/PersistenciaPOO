@@ -3,11 +3,12 @@ package org.example;
 import java.sql.Date;
 
 public class Emprestimo extends ItemPersistencia {
-    private int idCliente, idLivro;
+    private int idEmprestimo, idCliente, idLivro;
     private Date dataEmprestimo;
 
-    public Emprestimo(String oid, int idCliente, int idLivro, Date dataEmprestimo) {
+    public Emprestimo(String oid, int idEmprestimo, int idCliente, int idLivro, Date dataEmprestimo) {
         super(oid);
+        this.idEmprestimo = idEmprestimo;
         this.idCliente = idCliente;
         this.idLivro = idLivro;
         this.dataEmprestimo = dataEmprestimo;
@@ -24,5 +25,9 @@ public class Emprestimo extends ItemPersistencia {
 
     public Date getDataEmprestimo() {
         return dataEmprestimo;
+    }
+
+    public int getIdEmprestimo() {
+        return idEmprestimo;
     }
 }

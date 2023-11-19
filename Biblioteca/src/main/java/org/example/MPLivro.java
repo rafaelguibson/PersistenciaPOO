@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 class MPLivro extends MapaPersistencia<Livro> {
 
-
+    @Override
     protected void inserirItemNoArmazenamento(Livro livro, Connection conexao) {
         try {
             String sql = "INSERT INTO livro (oid, idLivro, titulo, autor, editora, anoLancamento) " +
@@ -28,6 +28,7 @@ class MPLivro extends MapaPersistencia<Livro> {
         }
     }
 
+    @Override
     protected void excluirItemNoArmazenamento(Connection conexao) {
         try {
             String sql = "DELETE FROM livro WHERE oid = ?";
@@ -66,15 +67,6 @@ class MPLivro extends MapaPersistencia<Livro> {
         }
     }
 
-    @Override
-    protected void inserirItemNoArmazenamento(Livro itemPersistencia) {
-
-    }
-
-    @Override
-    protected void excluirItemNoArmazenamento() {
-
-    }
 
     public MPLivro() {
         super();
