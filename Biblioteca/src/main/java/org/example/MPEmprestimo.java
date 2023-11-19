@@ -66,10 +66,31 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     }
 
     @Override
-    public Object obter(Connection connection, String item) {
-        return null;
-    }
+    public Object obter(Connection conexao, String item) {
+        try {
+            String sql = "SELECT * FROM emprestimo WHERE oid = ?";
+            try (
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
+                preparedStatement.setString(1, item);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
+                while (resultSet.next()) {
+                     Emprestimo emprestimo = new Emprestimo(
+                            resultSet.getString("oid"),
+                            resultSet.getInt("idEmprestimo"),
+                            resultSet.getInt("idCliente"),
+                            resultSet.getInt("idLivro"),
+                            resultSet.getDate("dataEmprestimo")
+                    );
+                    return emprestimo;
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public MPEmprestimo() {
         super();

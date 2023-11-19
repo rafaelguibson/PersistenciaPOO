@@ -67,7 +67,8 @@ class MPLivro extends MapaPersistencia<Livro> {
             return null;
         }
     }
-    public Livro obter(Connection conexao, String item) {
+    @Override
+    public Object obter(Connection conexao, String item) {
         try {
             String sql = "SELECT * FROM livro WHERE oid = ?";
             try (
@@ -86,7 +87,7 @@ class MPLivro extends MapaPersistencia<Livro> {
                     );
                     return livro;
                 }
-return null;
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();

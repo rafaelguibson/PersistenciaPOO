@@ -10,6 +10,8 @@ import java.util.Iterator;
 class MPCliente extends MapaPersistencia<Cliente> {
 
 
+    private Emprestimo emprestimo;
+
     @Override
     protected void inserirItemNoArmazenamento(Cliente cliente, Connection conexao) {
         try {
@@ -67,8 +69,30 @@ class MPCliente extends MapaPersistencia<Cliente> {
     }
 
     @Override
-    public Object obter(Connection connection, String item) {
-        return null;
+    public Object obter(Connection conexao, String item) {
+        try {
+            String sql = "SELECT * FROM emprestimo WHERE oid = ?";
+            try (
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
+                preparedStatement.setString(1, item);
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    Cliente cliente = new Cliente(
+                            resultSet.getString("oid"),
+                            resultSet.getInt("idCliente"),
+                            resultSet.getString("cpf"),
+                            resultSet.getString("nome"),
+                            resultSet.getString("telefone")
+                    );
+                    return cliente;
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

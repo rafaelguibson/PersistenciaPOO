@@ -89,7 +89,17 @@ public class Biblioteca {
 
     private static void obter(String entidade) {
         livro = (Livro) controle.getItem("L10", Classe.LIVRO);
+        System.out.println(livro.getOID() + "\n" + livro.getTitulo() + "\n");
+        livro = (Livro) controle.getItem("L09", Classe.LIVRO);
         System.out.println(livro.getOID() + "\n" + livro.getEditora() + "\n");
+//        c = (Cliente) controle.getItem("C10", Classe.CLIENTE);
+//        System.out.println(c.getOID() + "\n" + c.getNome() + "\n");
+//        c = (Cliente) controle.getItem("C02", Classe.CLIENTE);
+//        System.out.println(emprestimo.getOID() + "\n" + c.getNome() + "\n");
+        emprestimo = (Emprestimo) controle.getItem("E10", Classe.EMPRESTIMO);
+        System.out.println(emprestimo.getOID() + "\n" + emprestimo.getDataEmprestimo() + "\n");
+        emprestimo = (Emprestimo) controle.getItem("E04", Classe.EMPRESTIMO);
+        System.out.println(emprestimo.getOID() + "\n" + emprestimo.getDataEmprestimo() + "\n");
     }
 
     private static void inserir(String entidade) {
