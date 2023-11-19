@@ -9,14 +9,17 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     protected int indice;
 
     protected boolean haItemPersistido(String oid) {
+        System.out.println("entrou ha");
         boolean resposta = false;
-        int i;
-        for (i = 0; i < colecaoObjetos.size(); i++) {
+        for (int i = 0; i < colecaoObjetos.size(); i++) {
+            System.out.println("Entrou no for\n");
+            System.out.println(colecaoObjetos.get(i).getOID() + " = " + oid + "?\n");
             if (colecaoObjetos.get(i).getOID().equalsIgnoreCase(oid)) {
                 resposta = true;
                 indice = i;
             }
         }
+        System.out.println(resposta);
         return resposta;
     }
 
@@ -42,6 +45,7 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     public boolean excluir(String oid, Connection connection) {
         boolean resposta = false;
         if (haItemPersistido(oid)) {
+            System.out.println("entrou mapa\n");
             excluirItemNoArmazenamento(connection);
             resposta = true;
         }
@@ -49,7 +53,9 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     }
 
     public Iterator<T> obterTodos(Connection connection) {
+
         return colecaoObjetos.iterator();
     }
 
+    public abstract Object obter(Connection connection, String item);
 }

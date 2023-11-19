@@ -65,6 +65,11 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
         }
     }
 
+    @Override
+    public Object obter(Connection connection, String item) {
+        return null;
+    }
+
 
     public MPEmprestimo() {
         super();

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 class MPLivro extends MapaPersistencia<Livro> {
-
+    ArrayList<Livro> livros = new ArrayList<>();
     @Override
     protected void inserirItemNoArmazenamento(Livro livro, Connection conexao) {
         try {
@@ -35,6 +35,7 @@ class MPLivro extends MapaPersistencia<Livro> {
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
                 preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
                 preparedStatement.executeUpdate();
+                System.out.println("passou mplivro\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +48,7 @@ class MPLivro extends MapaPersistencia<Livro> {
             String sql = "SELECT * FROM livro";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
-                ArrayList<Livro> livros = new ArrayList<>();
+
                 while (resultSet.next()) {
                     Livro livro = new Livro(
                             resultSet.getString("oid"),
@@ -66,6 +67,33 @@ class MPLivro extends MapaPersistencia<Livro> {
             return null;
         }
     }
+    public Livro obter(Connection conexao, String item) {
+        try {
+            String sql = "SELECT * FROM livro WHERE oid = ?";
+            try (
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
+                    preparedStatement.setString(1, item);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    Livro livro = new Livro(
+                            resultSet.getString("oid"),
+                            resultSet.getInt("idLivro"),
+                            resultSet.getString("titulo"),
+                            resultSet.getString("autor"),
+                            resultSet.getString("editora"),
+                            resultSet.getDate("anoLancamento")
+                    );
+                    return livro;
+                }
+return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     public MPLivro() {

@@ -14,7 +14,7 @@ public class Biblioteca {
          int entrada;
          Scanner leitor = new Scanner(System.in);
         do {
-            System.out.println("-----Sistema de Biblioteca-----\n Selecione a opção:\n1: Clientes\n2: Livros\n3: Locações\n-1: Sair");
+            System.out.println("-----Sistema de Biblioteca-----\n Selecione a opção:\n1: Clientes\n2: Livros\n3: Emprestimos\n-1: Sair");
             entrada = Integer.parseInt(leitor.nextLine());
             int item = entrada - 1;
             if (entrada < 4 && entrada > -1) {
@@ -40,6 +40,8 @@ public class Biblioteca {
     }
 
     private static void excluir(String entidade) {
+        controle.excluir("L10", Classe.LIVRO);
+        obterTodos(entidade);
     }
 
     private static void obterTodos(String entidade) {
@@ -86,15 +88,14 @@ public class Biblioteca {
     }
 
     private static void obter(String entidade) {
-
-
+        livro = (Livro) controle.getItem("L10", Classe.LIVRO);
+        System.out.println(livro.getOID() + "\n" + livro.getEditora() + "\n");
     }
 
     private static void inserir(String entidade) {
         Scanner leitor  = new Scanner(System.in);
 
         if(entidade.equals("Cliente")){
-
             c = new Cliente("C11", 11, "123456789", "Marcio Giovane", "123-456-789");
             controle.inserir(c);
         }

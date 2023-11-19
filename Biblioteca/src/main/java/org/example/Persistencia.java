@@ -38,6 +38,7 @@ class Persistencia {
 
     public boolean excluir(String oid, Classe classe) {
         try (Connection connection = ConexaoDB.obterConexao()) {
+            System.out.println("entrou pers\n");
             return mapeadores.get(classe).excluir(oid, connection);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,5 +56,14 @@ class Persistencia {
     }
 
 
+    public Object obter(Classe classe, String item) {
+        try (Connection connection = ConexaoDB.obterConexao()) {
+            return mapeadores.get(classe).obter(connection, item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 }
 

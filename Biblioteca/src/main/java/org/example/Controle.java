@@ -15,11 +15,16 @@ class Controle {
     }
 
     public boolean excluir(String oid, Classe classe) {
+        System.out.println("Entrou excluir\n");
         return p.excluir(oid, classe);
     }
     public <T extends ItemPersistencia> Iterator<T> getLista(Classe classe) {
         return p.obterTodos(classe);
     }
 
+    public Object getItem(String item, Classe classe) {
+
+        return p.obter(classe, item);
+    }
 }
 

@@ -66,6 +66,11 @@ class MPCliente extends MapaPersistencia<Cliente> {
         }
     }
 
+    @Override
+    public Object obter(Connection connection, String item) {
+        return null;
+    }
+
 
     public MPCliente() {
         super();
