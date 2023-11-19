@@ -92,10 +92,12 @@ public class Biblioteca {
         System.out.println(livro.getOID() + "\n" + livro.getTitulo() + "\n");
         livro = (Livro) controle.getItem("L09", Classe.LIVRO);
         System.out.println(livro.getOID() + "\n" + livro.getEditora() + "\n");
+
 //        c = (Cliente) controle.getItem("C10", Classe.CLIENTE);
-//        System.out.println(c.getOID() + "\n" + c.getNome() + "\n");
+//        System.out.println(c.getIdCliente() + "\n" + c.getNome() + "\n");
 //        c = (Cliente) controle.getItem("C02", Classe.CLIENTE);
-//        System.out.println(emprestimo.getOID() + "\n" + c.getNome() + "\n");
+//        System.out.println(c.getIdCliente() + "\n" + c.getNome() + "\n");
+
         emprestimo = (Emprestimo) controle.getItem("E10", Classe.EMPRESTIMO);
         System.out.println(emprestimo.getOID() + "\n" + emprestimo.getDataEmprestimo() + "\n");
         emprestimo = (Emprestimo) controle.getItem("E04", Classe.EMPRESTIMO);

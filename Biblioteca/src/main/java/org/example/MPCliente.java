@@ -95,7 +95,6 @@ class MPCliente extends MapaPersistencia<Cliente> {
         }
     }
 
-
     public MPCliente() {
         super();
     }
