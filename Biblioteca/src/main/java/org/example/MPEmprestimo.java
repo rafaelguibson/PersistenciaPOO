@@ -15,7 +15,7 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
             String sql = "INSERT INTO emprestimo (oid, idCliente, idLivro, dataEmprestimo) " +
                     "VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, emprestimo.getOID());
+                preparedStatement.setInt(1, emprestimo.getOID());
                 preparedStatement.setInt(3, emprestimo.getIdCliente());
                 preparedStatement.setInt(4, emprestimo.getIdLivro());
                 preparedStatement.setDate(5, emprestimo.getDataEmprestimo());
@@ -31,7 +31,7 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
         try {
             String sql = "DELETE FROM emprestimo WHERE oid = ?";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
+                preparedStatement.setInt(1, colecaoObjetos.get(indice).getOID());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -48,7 +48,7 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
                 ArrayList<Emprestimo> emprestimos = new ArrayList<>();
                 while (resultSet.next()) {
                     Emprestimo emprestimo = new Emprestimo(
-                            resultSet.getString("oid"),
+                            resultSet.getInt("oid"),
                             resultSet.getInt("idCliente"),
                             resultSet.getInt("idLivro"),
                             resultSet.getDate("dataEmprestimo")
@@ -64,18 +64,17 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     }
 
     @Override
-    public Object obter(Connection conexao, String item) {
+    public Object obter(Connection conexao, int item) {
         try {
             String sql = "SELECT * FROM emprestimo WHERE oid = ?";
             try (
                     PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
-                preparedStatement.setString(1, item);
+                preparedStatement.setInt(1, item);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                      Emprestimo emprestimo = new Emprestimo(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idEmprestimo"),
+                            resultSet.getInt("oid"),
                             resultSet.getInt("idCliente"),
                             resultSet.getInt("idLivro"),
                             resultSet.getDate("dataEmprestimo")

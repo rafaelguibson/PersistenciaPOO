@@ -35,7 +35,7 @@ class MPCliente extends MapaPersistencia<Cliente> {
         try {
             String sql = "DELETE FROM cliente WHERE oid = ?";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
+                preparedStatement.setInt(1, colecaoObjetos.get(indice).getOID());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -52,8 +52,7 @@ class MPCliente extends MapaPersistencia<Cliente> {
                 ArrayList<Cliente> clientes = new ArrayList<>();
                 while (resultSet.next()) {
                     Cliente cliente = new Cliente(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idCliente"),
+                            resultSet.getInt("oid"),
                             resultSet.getString("cpf"),
                             resultSet.getString("nome"),
                             resultSet.getString("telefone")
@@ -69,18 +68,17 @@ class MPCliente extends MapaPersistencia<Cliente> {
     }
 
     @Override
-    public Object obter(Connection conexao, String item) {
+    public Object obter(Connection conexao, int item) {
         try {
             String sql = "SELECT * FROM emprestimo WHERE oid = ?";
             try (
                     PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
-                preparedStatement.setString(1, item);
+                preparedStatement.setInt(1, item);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                     Cliente cliente = new Cliente(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idCliente"),
+                            resultSet.getInt("oid"),
                             resultSet.getString("cpf"),
                             resultSet.getString("nome"),
                             resultSet.getString("telefone")
