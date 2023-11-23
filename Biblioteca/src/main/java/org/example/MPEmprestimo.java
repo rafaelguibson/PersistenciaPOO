@@ -12,11 +12,10 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     @Override
     protected void inserirItemNoArmazenamento(Emprestimo emprestimo, Connection conexao) {
         try {
-            String sql = "INSERT INTO emprestimo (oid, idEmprestimo, idCliente, idLivro, dataEmprestimo) " +
+            String sql = "INSERT INTO emprestimo (oid, idCliente, idLivro, dataEmprestimo) " +
                     "VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
                 preparedStatement.setString(1, emprestimo.getOID());
-                preparedStatement.setInt(2, emprestimo.getIdEmprestimo());
                 preparedStatement.setInt(3, emprestimo.getIdCliente());
                 preparedStatement.setInt(4, emprestimo.getIdLivro());
                 preparedStatement.setDate(5, emprestimo.getDataEmprestimo());
@@ -50,7 +49,6 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
                 while (resultSet.next()) {
                     Emprestimo emprestimo = new Emprestimo(
                             resultSet.getString("oid"),
-                            resultSet.getInt("idEmprestimo"),
                             resultSet.getInt("idCliente"),
                             resultSet.getInt("idLivro"),
                             resultSet.getDate("dataEmprestimo")

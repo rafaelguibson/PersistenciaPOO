@@ -14,7 +14,7 @@ class Controle {
         return p.inserir(itemPersistencia);
     }
 
-    public boolean excluir(String oid, Classe classe) {
+    public boolean excluir(int oid, Classe classe) {
         System.out.println("Entrou excluir\n");
         return p.excluir(oid, classe);
     }
@@ -22,7 +22,7 @@ class Controle {
         return p.obterTodos(classe);
     }
 
-    public Object getItem(String item, Classe classe) {
+    public Object getItem(int item, Classe classe) {
 
         return p.obter(classe, item);
     }

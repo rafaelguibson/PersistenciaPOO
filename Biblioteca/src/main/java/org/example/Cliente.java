@@ -9,9 +9,8 @@ public class Cliente extends ItemPersistencia {
     private int idCliente;
     private String cpf, nome, telefone;
 
-    public Cliente(String oid, int idCliente, String cpf, String nome, String telefone) {
+    public Cliente(int oid, String cpf, String nome, String telefone) {
         super(oid);
-        this.idCliente = idCliente;
         this.cpf = cpf;
         this.nome = nome;
         this.telefone = telefone;

@@ -18,7 +18,7 @@ class MPCliente extends MapaPersistencia<Cliente> {
             String sql = "INSERT INTO cliente (oid, idCliente, cpf, nome, telefone) " +
                     "VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, cliente.getOID());
+                preparedStatement.setInt(1, cliente.getOID());
                 preparedStatement.setInt(2, cliente.getIdCliente());
                 preparedStatement.setString(3, cliente.getCpf());
                 preparedStatement.setString(4, cliente.getNome());

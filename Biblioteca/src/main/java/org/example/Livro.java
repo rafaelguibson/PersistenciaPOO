@@ -7,9 +7,8 @@ public class Livro extends ItemPersistencia {
     private String titulo, autor, editora;
     private Date anoLancamento;
 
-    public Livro(String oid, int idLivro, String titulo, String autor, String editora, Date anoLancamento) {
+    public Livro(int oid, String titulo, String autor, String editora, Date anoLancamento) {
         super(oid);
-        this.idLivro = idLivro;
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;

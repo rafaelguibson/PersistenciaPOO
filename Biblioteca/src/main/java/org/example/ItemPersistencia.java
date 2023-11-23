@@ -6,9 +6,9 @@ import java.io.Serializable;
 
 public class ItemPersistencia implements Serializable {
     protected Classe classe;
-    protected String oid;
+    protected int oid;
 
-    public ItemPersistencia(String oid) {
+    public ItemPersistencia(int oid) {
         this.oid = oid;
     }
 
@@ -16,7 +16,7 @@ public class ItemPersistencia implements Serializable {
         return classe;
     }
 
-    String getOID() {
+    int getOID() {
         return oid;
     }
 }

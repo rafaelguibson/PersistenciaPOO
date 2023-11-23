@@ -40,7 +40,7 @@ public class Biblioteca {
     }
 
     private static void excluir(String entidade) {
-        controle.excluir("L10", Classe.LIVRO);
+        controle.excluir(1, Classe.LIVRO);
         obterTodos(entidade);
     }
 
@@ -88,9 +88,9 @@ public class Biblioteca {
     }
 
     private static void obter(String entidade) {
-        livro = (Livro) controle.getItem("L10", Classe.LIVRO);
+        livro = (Livro) controle.getItem(1, Classe.LIVRO);
         System.out.println(livro.getOID() + "\n" + livro.getTitulo() + "\n");
-        livro = (Livro) controle.getItem("L09", Classe.LIVRO);
+        livro = (Livro) controle.getItem(9, Classe.LIVRO);
         System.out.println(livro.getOID() + "\n" + livro.getEditora() + "\n");
 
 //        c = (Cliente) controle.getItem("C10", Classe.CLIENTE);
@@ -98,9 +98,9 @@ public class Biblioteca {
 //        c = (Cliente) controle.getItem("C02", Classe.CLIENTE);
 //        System.out.println(c.getIdCliente() + "\n" + c.getNome() + "\n");
 
-        emprestimo = (Emprestimo) controle.getItem("E10", Classe.EMPRESTIMO);
+        emprestimo = (Emprestimo) controle.getItem(1, Classe.EMPRESTIMO);
         System.out.println(emprestimo.getOID() + "\n" + emprestimo.getDataEmprestimo() + "\n");
-        emprestimo = (Emprestimo) controle.getItem("E04", Classe.EMPRESTIMO);
+        emprestimo = (Emprestimo) controle.getItem(4, Classe.EMPRESTIMO);
         System.out.println(emprestimo.getOID() + "\n" + emprestimo.getDataEmprestimo() + "\n");
     }
 
@@ -108,15 +108,15 @@ public class Biblioteca {
         Scanner leitor  = new Scanner(System.in);
 
         if(entidade.equals("Cliente")){
-            c = new Cliente("C11", 11, "123456789", "Marcio Giovane", "123-456-789");
+            c = new Cliente( 11, "123456789", "Marcio Giovane", "123-456-789");
             controle.inserir(c);
         }
         else if (entidade.equals("Livro")) {
-            livro = new Livro("L11", 11, "Guerra nas Estrelas", "Autor1", "Editora1", Date.valueOf("2000-01-01"));
+            livro = new Livro( 11, "Guerra nas Estrelas", "Autor1", "Editora1", Date.valueOf("2000-01-01"));
             controle.inserir(livro);
         }
         else {
-            emprestimo = new Emprestimo("E11", 11, 11,11,  Date.valueOf("2023-01-01"));
+            emprestimo = new Emprestimo(11, 11,  11,  Date.valueOf("2023-01-01"));
             controle.inserir(emprestimo);
         }
     }
