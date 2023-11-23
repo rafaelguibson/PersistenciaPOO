@@ -116,7 +116,7 @@ public class Biblioteca {
             controle.inserir(livro);
         }
         else {
-            emprestimo = new Emprestimo(11, 11,  11,  Date.valueOf("2023-01-01"));
+            emprestimo = new Emprestimo(11,  9, 9,  Date.valueOf("2023-01-01"));
             controle.inserir(emprestimo);
         }
     }
