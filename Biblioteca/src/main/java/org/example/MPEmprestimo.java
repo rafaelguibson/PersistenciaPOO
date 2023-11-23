@@ -75,8 +75,8 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
                 while (resultSet.next()) {
                      Emprestimo emprestimo = new Emprestimo(
                             resultSet.getInt("oid"),
-                            resultSet.getInt("idCliente"),
-                            resultSet.getInt("idLivro"),
+                            resultSet.getInt("oidCliente"),
+                            resultSet.getInt("oidLivro"),
                             resultSet.getDate("dataEmprestimo")
                     );
                     return emprestimo;

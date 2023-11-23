@@ -15,14 +15,13 @@ class MPCliente extends MapaPersistencia<Cliente> {
     @Override
     protected void inserirItemNoArmazenamento(Cliente cliente, Connection conexao) {
         try {
-            String sql = "INSERT INTO cliente (oid, idCliente, cpf, nome, telefone) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO cliente (oid, cpf, nome, telefone) " +
+                    "VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
                 preparedStatement.setInt(1, cliente.getOID());
-                preparedStatement.setInt(2, cliente.getIdCliente());
-                preparedStatement.setString(3, cliente.getCpf());
-                preparedStatement.setString(4, cliente.getNome());
-                preparedStatement.setString(5, cliente.getTelefone());
+                preparedStatement.setString(2, cliente.getCpf());
+                preparedStatement.setString(3, cliente.getNome());
+                preparedStatement.setString(4, cliente.getTelefone());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
