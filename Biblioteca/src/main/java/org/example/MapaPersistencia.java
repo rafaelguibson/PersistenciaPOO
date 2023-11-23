@@ -8,18 +8,14 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     protected ArrayList<T> colecaoObjetos;
     protected int indice;
 
-    protected boolean haItemPersistido(String oid) {
-        System.out.println("entrou ha");
+    protected boolean haItemPersistido(int id) { // Alteração: substituir oid por id
         boolean resposta = false;
         for (int i = 0; i < colecaoObjetos.size(); i++) {
-            System.out.println("Entrou no for\n");
-            System.out.println(colecaoObjetos.get(i).getOID() + " = " + oid + "?\n");
-            if (colecaoObjetos.get(i).getOID().equalsIgnoreCase(oid)) {
+            if (colecaoObjetos.get(i).getId() == id) { // Alteração: substituir getOID por getId
                 resposta = true;
                 indice = i;
             }
         }
-        System.out.println(resposta);
         return resposta;
     }
 
@@ -35,17 +31,16 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
 
     public boolean inserir(ItemPersistencia itemPersistencia, Connection connection) {
         boolean resposta = false;
-        if (!haItemPersistido(itemPersistencia.getOID())) {
+        if (!haItemPersistido(itemPersistencia.getId())) { // Alteração: substituir getOID por getId
             inserirItemNoArmazenamento((T) itemPersistencia, connection);
             resposta = true;
         }
         return resposta;
     }
 
-    public boolean excluir(String oid, Connection connection) {
+    public boolean excluir(int id, Connection connection) { // Alteração: substituir oid por id
         boolean resposta = false;
-        if (haItemPersistido(oid)) {
-            System.out.println("entrou mapa\n");
+        if (haItemPersistido(id)) {
             excluirItemNoArmazenamento(connection);
             resposta = true;
         }
@@ -53,9 +48,8 @@ abstract class MapaPersistencia<T extends ItemPersistencia> {
     }
 
     public Iterator<T> obterTodos(Connection connection) {
-
         return colecaoObjetos.iterator();
     }
 
-    public abstract Object obter(Connection connection, String item);
+    public abstract Object obter(Connection connection, int id); // Alteração: substituir String por int
 }

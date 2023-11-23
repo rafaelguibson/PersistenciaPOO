@@ -9,20 +9,14 @@ import java.util.Iterator;
 
 class MPCliente extends MapaPersistencia<Cliente> {
 
-
-    private Emprestimo emprestimo;
-
     @Override
     protected void inserirItemNoArmazenamento(Cliente cliente, Connection conexao) {
         try {
-            String sql = "INSERT INTO cliente (oid, idCliente, cpf, nome, telefone) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO cliente (cpf, nome, telefone) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, cliente.getOID());
-                preparedStatement.setInt(2, cliente.getIdCliente());
-                preparedStatement.setString(3, cliente.getCpf());
-                preparedStatement.setString(4, cliente.getNome());
-                preparedStatement.setString(5, cliente.getTelefone());
+                preparedStatement.setString(1, cliente.getCpf());
+                preparedStatement.setString(2, cliente.getNome());
+                preparedStatement.setString(3, cliente.getTelefone());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -33,9 +27,9 @@ class MPCliente extends MapaPersistencia<Cliente> {
     @Override
     protected void excluirItemNoArmazenamento(Connection conexao) {
         try {
-            String sql = "DELETE FROM cliente WHERE oid = ?";
+            String sql = "DELETE FROM cliente WHERE id = ?";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
+                preparedStatement.setInt(1, colecaoObjetos.get(indice).getId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -52,8 +46,7 @@ class MPCliente extends MapaPersistencia<Cliente> {
                 ArrayList<Cliente> clientes = new ArrayList<>();
                 while (resultSet.next()) {
                     Cliente cliente = new Cliente(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idCliente"),
+                            resultSet.getInt("id"),
                             resultSet.getString("cpf"),
                             resultSet.getString("nome"),
                             resultSet.getString("telefone")
@@ -69,18 +62,17 @@ class MPCliente extends MapaPersistencia<Cliente> {
     }
 
     @Override
-    public Object obter(Connection conexao, String item) {
+    public Object obter(Connection conexao, int id) {
         try {
-            String sql = "SELECT * FROM emprestimo WHERE oid = ?";
+            String sql = "SELECT * FROM cliente WHERE id = ?";
             try (
-                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
-                preparedStatement.setString(1, item);
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                     Cliente cliente = new Cliente(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idCliente"),
+                            resultSet.getInt("id"),
                             resultSet.getString("cpf"),
                             resultSet.getString("nome"),
                             resultSet.getString("telefone")
@@ -98,5 +90,4 @@ class MPCliente extends MapaPersistencia<Cliente> {
     public MPCliente() {
         super();
     }
-
 }

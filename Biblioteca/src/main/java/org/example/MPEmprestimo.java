@@ -12,14 +12,11 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     @Override
     protected void inserirItemNoArmazenamento(Emprestimo emprestimo, Connection conexao) {
         try {
-            String sql = "INSERT INTO emprestimo (oid, idEmprestimo, idCliente, idLivro, dataEmprestimo) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO emprestimo (oidCliente, oidLivro, dataEmprestimo) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, emprestimo.getOID());
-                preparedStatement.setInt(2, emprestimo.getIdEmprestimo());
-                preparedStatement.setInt(3, emprestimo.getIdCliente());
-                preparedStatement.setInt(4, emprestimo.getIdLivro());
-                preparedStatement.setDate(5, emprestimo.getDataEmprestimo());
+                preparedStatement.setInt(1, emprestimo.getIdCliente());
+                preparedStatement.setInt(2, emprestimo.getIdLivro());
+                preparedStatement.setDate(3, emprestimo.getDataEmprestimo());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -30,9 +27,9 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     @Override
     protected void excluirItemNoArmazenamento(Connection conexao) {
         try {
-            String sql = "DELETE FROM emprestimo WHERE oid = ?";
+            String sql = "DELETE FROM emprestimo WHERE id = ?";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
+                preparedStatement.setInt(1, colecaoObjetos.get(indice).getId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -49,10 +46,9 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
                 ArrayList<Emprestimo> emprestimos = new ArrayList<>();
                 while (resultSet.next()) {
                     Emprestimo emprestimo = new Emprestimo(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idEmprestimo"),
-                            resultSet.getInt("idCliente"),
-                            resultSet.getInt("idLivro"),
+                            resultSet.getInt("id"),
+                            resultSet.getInt("oidCliente"),
+                            resultSet.getInt("oidLivro"),
                             resultSet.getDate("dataEmprestimo")
                     );
                     emprestimos.add(emprestimo);
@@ -66,20 +62,19 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     }
 
     @Override
-    public Object obter(Connection conexao, String item) {
+    public Object obter(Connection conexao, int id) {
         try {
-            String sql = "SELECT * FROM emprestimo WHERE oid = ?";
+            String sql = "SELECT * FROM emprestimo WHERE id = ?";
             try (
-                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
-                preparedStatement.setString(1, item);
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
-                     Emprestimo emprestimo = new Emprestimo(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idEmprestimo"),
-                            resultSet.getInt("idCliente"),
-                            resultSet.getInt("idLivro"),
+                    Emprestimo emprestimo = new Emprestimo(
+                            resultSet.getInt("id"),
+                            resultSet.getInt("oidCliente"),
+                            resultSet.getInt("oidLivro"),
                             resultSet.getDate("dataEmprestimo")
                     );
                     return emprestimo;
@@ -96,4 +91,3 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
         super();
     }
 }
-

@@ -3,22 +3,16 @@ package org.example;
 import java.sql.Date;
 
 public class Livro extends ItemPersistencia {
-    private int idLivro;
     private String titulo, autor, editora;
     private Date anoLancamento;
 
-    public Livro(String oid, int idLivro, String titulo, String autor, String editora, Date anoLancamento) {
-        super(oid);
-        this.idLivro = idLivro;
+    public Livro(int id, String titulo, String autor, String editora, Date anoLancamento) {
+        super(id);
         this.titulo = titulo;
         this.autor = autor;
         this.editora = editora;
         this.anoLancamento = anoLancamento;
         classe = Classe.LIVRO;
-    }
-
-    public int getIdLivro() {
-        return idLivro;
     }
 
     public String getTitulo() {

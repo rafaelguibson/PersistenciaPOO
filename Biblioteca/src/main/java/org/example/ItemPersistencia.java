@@ -2,21 +2,19 @@ package org.example;
 
 import java.io.Serializable;
 
-
-
 public class ItemPersistencia implements Serializable {
     protected Classe classe;
-    protected String oid;
+    protected int id; // Alteração: substituir oid por id
 
-    public ItemPersistencia(String oid) {
-        this.oid = oid;
+    public ItemPersistencia(int id) {
+        this.id = id;
     }
 
-    Classe getClasse() {
+    public int getId() {
+        return id;
+    }
+
+    public Classe getClasse() {
         return classe;
-    }
-
-    String getOID() {
-        return oid;
     }
 }

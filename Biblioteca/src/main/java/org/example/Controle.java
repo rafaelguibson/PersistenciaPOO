@@ -14,9 +14,9 @@ class Controle {
         return p.inserir(itemPersistencia);
     }
 
-    public boolean excluir(String oid, Classe classe) {
+    public boolean excluir(int id, Classe classe) {
         System.out.println("Entrou excluir\n");
-        return p.excluir(oid, classe);
+        return p.excluir(id, classe);
     }
     public <T extends ItemPersistencia> Iterator<T> getLista(Classe classe) {
         return p.obterTodos(classe);

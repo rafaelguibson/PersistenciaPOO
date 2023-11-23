@@ -1,25 +1,14 @@
 package org.example;
 
-import org.example.Classe;
-import org.example.ItemPersistencia;
-
-import java.io.Serializable;
-
 public class Cliente extends ItemPersistencia {
-    private int idCliente;
     private String cpf, nome, telefone;
 
-    public Cliente(String oid, int idCliente, String cpf, String nome, String telefone) {
-        super(oid);
-        this.idCliente = idCliente;
+    public Cliente(int id, String cpf, String nome, String telefone) {
+        super(id);
         this.cpf = cpf;
         this.nome = nome;
         this.telefone = telefone;
         classe = Classe.CLIENTE;
-    }
-
-    public int getIdCliente() {
-        return idCliente;
     }
 
     public String getCpf() {

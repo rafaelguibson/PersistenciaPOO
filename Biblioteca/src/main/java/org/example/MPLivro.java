@@ -9,18 +9,16 @@ import java.util.Iterator;
 
 class MPLivro extends MapaPersistencia<Livro> {
     ArrayList<Livro> livros = new ArrayList<>();
+
     @Override
     protected void inserirItemNoArmazenamento(Livro livro, Connection conexao) {
         try {
-            String sql = "INSERT INTO livro (oid, idLivro, titulo, autor, editora, anoLancamento) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO livro (titulo, autor, editora, anoLancamento) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, livro.getOID());
-                preparedStatement.setInt(2, livro.getIdLivro());
-                preparedStatement.setString(3, livro.getTitulo());
-                preparedStatement.setString(4, livro.getAutor());
-                preparedStatement.setString(5, livro.getEditora());
-                preparedStatement.setDate(6, livro.getAnoLancamento());
+                preparedStatement.setString(1, livro.getTitulo());
+                preparedStatement.setString(2, livro.getAutor());
+                preparedStatement.setString(3, livro.getEditora());
+                preparedStatement.setDate(4, livro.getAnoLancamento());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -31,11 +29,10 @@ class MPLivro extends MapaPersistencia<Livro> {
     @Override
     protected void excluirItemNoArmazenamento(Connection conexao) {
         try {
-            String sql = "DELETE FROM livro WHERE oid = ?";
+            String sql = "DELETE FROM livro WHERE id = ?";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
-                preparedStatement.setString(1, colecaoObjetos.get(indice).getOID());
+                preparedStatement.setInt(1, colecaoObjetos.get(indice).getId());
                 preparedStatement.executeUpdate();
-                System.out.println("passou mplivro\n");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,8 +48,7 @@ class MPLivro extends MapaPersistencia<Livro> {
 
                 while (resultSet.next()) {
                     Livro livro = new Livro(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idLivro"),
+                            resultSet.getInt("id"),
                             resultSet.getString("titulo"),
                             resultSet.getString("autor"),
                             resultSet.getString("editora"),
@@ -67,19 +63,19 @@ class MPLivro extends MapaPersistencia<Livro> {
             return null;
         }
     }
+
     @Override
-    public Object obter(Connection conexao, String item) {
+    public Object obter(Connection conexao, int id) {
         try {
-            String sql = "SELECT * FROM livro WHERE oid = ?";
+            String sql = "SELECT * FROM livro WHERE id = ?";
             try (
-                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)){
-                    preparedStatement.setString(1, item);
-                    ResultSet resultSet = preparedStatement.executeQuery();
+                    PreparedStatement preparedStatement = conexao.prepareStatement(sql)) {
+                preparedStatement.setInt(1, id);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()) {
                     Livro livro = new Livro(
-                            resultSet.getString("oid"),
-                            resultSet.getInt("idLivro"),
+                            resultSet.getInt("id"),
                             resultSet.getString("titulo"),
                             resultSet.getString("autor"),
                             resultSet.getString("editora"),
@@ -95,10 +91,7 @@ class MPLivro extends MapaPersistencia<Livro> {
         }
     }
 
-
-
     public MPLivro() {
         super();
     }
 }
-
