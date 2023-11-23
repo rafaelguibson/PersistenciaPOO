@@ -51,7 +51,7 @@ public class Biblioteca {
             while (itc.hasNext()) {
                 System.out.println("----");
                 Cliente cliente = itc.next();
-                System.out.println(cliente.getId());
+                System.out.println(cliente.getOID());
                 System.out.println(cliente.getNome());
                 System.out.println(cliente.getTelefone());
                 System.out.println("----");
@@ -63,7 +63,7 @@ public class Biblioteca {
             while (itl.hasNext()) {
                 System.out.println("----");
                 Livro l = itl.next();
-                System.out.println(l.getId());
+                System.out.println(l.getOID());
                 System.out.println(l.getTitulo());
                 System.out.println(l.getAutor());
                 System.out.println(l.getEditora());
@@ -78,7 +78,7 @@ public class Biblioteca {
             while (ite.hasNext()) {
                 System.out.println("----");
                 Emprestimo empre = ite.next();
-                System.out.println(empre.getId());
+                System.out.println(empre.getOID());
                 System.out.println(empre.getIdCliente());
                 System.out.println(empre.getIdLivro());
                 System.out.println(empre.getDataEmprestimo());
