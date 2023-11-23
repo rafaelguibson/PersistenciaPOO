@@ -7,14 +7,14 @@ DROP TABLE livro;
 
 
 CREATE TABLE cliente(
-	oidCliente SERIAL PRIMARY KEY ,
+	oid SERIAL PRIMARY KEY ,
 	cpf VARCHAR(11) NOT NULL,
 	nome VARCHAR(100) NOT NULL,
 	telefone VARCHAR(11) NOT NULL
 );
 
 CREATE TABLE livro(
-	oidLivro  SERIAL PRIMARY KEY ,
+	oid  SERIAL PRIMARY KEY ,
 	titulo VARCHAR(100) NOT NULL,
 	autor VARCHAR(100) NOT NULL,
 	editora VARCHAR(100) NOT NULL,
@@ -23,14 +23,14 @@ CREATE TABLE livro(
 
 
 CREATE TABLE emprestimo(
-	oidEmprestimo SERIAL PRIMARY KEY ,
-	oidLivro INTEGER NOT NULL,
+	oid SERIAL PRIMARY KEY ,
 	oidCliente INTEGER NOT NULL,
+	oidLivro INTEGER NOT NULL,
 	dataEmprestimo DATE NOT NULL,
 	FOREIGN KEY(oidLivro)
-		REFERENCES livro(oidLivro),
+		REFERENCES livro(oid),
 	FOREIGN KEY(oidCliente)
-		REFERENCES cliente(oidCliente)
+		REFERENCES cliente(oid)
 );
 
 
@@ -65,7 +65,7 @@ INSERT INTO livro (titulo, autor, editora, anoLancamento) VALUES
 
 
 -- Dados para a tabela emprestimo
-INSERT INTO emprestimo (oidLivro, oidCliente, dataEmprestimo) VALUES
+INSERT INTO emprestimo (oidCliente, oidLivro, dataEmprestimo) VALUES
 (1, 2, '2022-01-05'),
 (3, 5, '2022-02-10'),
 (5, 8, '2022-03-15'),
