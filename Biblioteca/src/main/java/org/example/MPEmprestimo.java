@@ -42,17 +42,39 @@ class MPEmprestimo extends MapaPersistencia<Emprestimo> {
     @Override
     public Iterator<Emprestimo> obterTodos(Connection conexao) {
         try {
-            String sql = "SELECT * FROM emprestimo";
+            String sql = "SELECT e.oid AS oidEmprestimo, e.idCliente, e.idLivro, e.dataEmprestimo, " +
+                    "c.oid AS oidCliente, c.cpf, c.nome AS nomeCliente, c.telefone, " +
+                    "l.oid AS oidLivro, l.titulo, l.autor, l.editora, l.anoLancamento " +
+                    "FROM emprestimo e " +
+                    "JOIN cliente c ON e.idCliente = c.oid " +
+                    "JOIN livro l ON e.idLivro = l.oid";
             try (PreparedStatement preparedStatement = conexao.prepareStatement(sql);
                  ResultSet resultSet = preparedStatement.executeQuery()) {
+
                 ArrayList<Emprestimo> emprestimos = new ArrayList<>();
                 while (resultSet.next()) {
-                    Emprestimo emprestimo = new Emprestimo(
-                            resultSet.getInt("oid"),
+                    Cliente cliente = new Cliente(
                             resultSet.getInt("oidCliente"),
+                            resultSet.getString("cpf"),
+                            resultSet.getString("nomeCliente"),
+                            resultSet.getString("telefone")
+                    );
+
+                    Livro livro = new Livro(
                             resultSet.getInt("oidLivro"),
+                            resultSet.getString("titulo"),
+                            resultSet.getString("autor"),
+                            resultSet.getString("editora"),
+                            resultSet.getDate("anoLancamento")
+                    );
+
+                    Emprestimo emprestimo = new Emprestimo(
+                            resultSet.getInt("oidEmprestimo"),
+                            cliente.getOID(),
+                            livro.getOID(),
                             resultSet.getDate("dataEmprestimo")
                     );
+
                     emprestimos.add(emprestimo);
                 }
                 return emprestimos.iterator();
